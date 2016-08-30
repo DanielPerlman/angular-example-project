@@ -12,6 +12,7 @@ angular.module('bulbThings', [])
     $scope.allAssets = [];
     $scope.assets = [];
     $scope.filterType = null;
+    $scope.ascending = false;
     var deleteTarget = null;
 
     // Key defaults
@@ -25,6 +26,13 @@ angular.module('bulbThings', [])
 
     // Field keys based on type
     $scope.fields = [ [ 3 ], [ 4 ], [ 5, 6] ];
+
+    // Sort assets ascending or descending
+    $scope.sort = function (key) {
+      if (key == 'name') {
+        $scope.ascending = !$scope.ascending;
+      }
+    };
 
     // Filter based on type or return all assets
     $scope.filterAssets = function () {
