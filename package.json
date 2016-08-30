@@ -1,0 +1,15 @@
+{
+  "name": "bulb-things",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "initdb": "node models/database.js",
+    "start": "supervisor ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "express": "~4.13.4",
+    "pg": "^6.1.0"
+  }
+}

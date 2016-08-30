@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html ng-app="bulbThings">
+<head>
+  <title>Bulb Things Challenge</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/app.css" />
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body ng-controller="mainController">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 container">
+      <!-- Asset creation button -->
+      <div id="assetAdd" data-toggle="modal" data-target="#assetAddModal" >Add Asset</div>
+      <!-- Filter selection, default none -->
+      <div id="assetsFilter">
+        <select class="form-control" ng-change="filterAssets()" ng-model="filterType" ng-options="option.label for option in options track by option.value">
+          <option ng-selected="true" value="">Filter assets by type</option>
+        </select>
+      </div>
+
+      <!-- Loop through list of assets(filtered or not) with a delete button, click to edit -->
+      <div id="assetList">
+        <table class="asset-list table-striped table-bordered">
+          <tr>
+            <th ng-repeat="key in keys">{{key}}</th>
+            <th>Action</th>
+          </tr>
+          <tr ng-repeat="asset in assets">
+            <td data-toggle="modal" data-target="#assetEditModal" ng-click="edit(asset)" ng-repeat="key in keys" class="editable" ng-class="{ disabled: !asset[(key | lowercaseNoSpace)] }">{{ asset[(key | lowercaseNoSpace)] }} </td>
+            <td data-toggle="modal" data-target="#confirm" class="asset-delete" ng-click="delete(asset.id)"><span class="glyphicon glyphicon-trash"></span> </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+
+  <!-- Asset creation modal, opens on Add Asset click, resets if closed or created -->
+  <div class="modal fade" id="assetAddModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="resetForm()"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Add Asset</h4>
+        </div>
+        <div class="modal-body">
+          <div class="asset-form">
+            <form name="assetForm" novalidate>
+              <div class="form-group">
+                <select class="form-control input-lg" ng-change="resetForm()" ng-model="formData.type" ng-init="formData.type = options[0]" ng-options="option.label for option in options track by option.value">
+                </select>
+                <input type="text" class="form-control input-lg" placeholder="Name" ng-model="formData.name" required>
+                <input type="number" class="form-control input-lg" placeholder="Quantity" ng-model="formData.quantity" ng-pattern="integerval" required>
+                <div ng-repeat="field in fields[(formData.type.value-1)]">
+                  <input type="number" class="form-control input-lg" ng-pattern="integerval" ng-attr-placeholder="{{keys[field]}}" ng-model="formData[(keys[field] | lowercaseNoSpace)]">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="createAsset(assetForm.$valid)" ng-disabled="assetForm.$invalid" data-dismiss="modal">Add Asset</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Asset modification modal, takes current asset's information from scope, changes and resets the form on close clicked or submitted -->
+  <div class="modal fade" id="assetEditModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" ng-click="resetForm()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Edit Asset</h4>
+        </div>
+        <div class="modal-body">
+          <div class="asset-form">
+            <form name="assetForm" novalidate>
+              <div class="form-group">
+                <input type="text" class="form-control input-lg" placeholder="Name" ng-model="formData.name" required>
+                <input type="number" class="form-control input-lg" placeholder="Quantity" ng-model="formData.quantity" ng-pattern="integerval" required>
+                <div ng-repeat="field in fields[(formData.type-1)]">
+                  <input type="number" class="form-control input-lg" ng-pattern="integerval" ng-attr-placeholder="{{keys[field]}}" ng-model="formData[(keys[field] | lowercaseNoSpace)]">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="editAsset(assetForm.$valid, formData.id)" ng-disabled="assetForm.$invalid" data-dismiss="modal">Edit Asset</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Asset deletion confirmation, checks current target if delete button clicked -->
+  <div id="confirm" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          Are you sure?
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="deleteAsset()">Delete</button>
+          <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Scripts -->
+  <script src="javascripts/angular.js"></script>
+  <script src ="javascripts/app.js"></script>
+</body>
+</html>

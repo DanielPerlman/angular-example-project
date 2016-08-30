@@ -1,0 +1,93 @@
+body {
+  padding: 50px;
+  font: 14px "Inconsolata", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+th, td {
+  text-align: center !important;
+}
+
+th {
+  border-top: none;
+  background-color: #f36f3b;
+  color: white;
+  font-size: 14px;
+  font-weight: lighter;
+  padding: 5px;
+}
+
+td {
+  border-left: 1px solid black;
+  padding: 3px;
+}
+
+th:last-of-type {
+  border-right: none;
+}
+
+th:first-of-type, td:first-of-type {
+  border-left: none;
+}
+
+tr {
+  border-bottom: 1px solid black;
+}
+
+tr:last-of-type {
+  border-bottom: none;
+}
+
+tr:hover,
+.asset-delete:hover {
+  background: rgba(1,1,1,0.1) !important;
+}
+
+#assetAdd {
+  text-align: center;
+  background-color: #f36f3b;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 2px;
+  height: 34px;
+}
+
+#assetList {
+  margin-top: 5px;
+  width: 100%;
+  border-radius: 2px;
+}
+
+#assetList table {
+  width: 100%;
+}
+
+#assetsFilter {
+  box-shadow: none;
+}
+
+.form-group > input,
+.form-group > div {
+  margin-top: 5px;
+}
+
+.disabled:after {
+  font-size: 11px;
+  content: "N/A";
+}
+
+.editable {
+  cursor: pointer;
+}
+
+.asset-delete {
+  cursor: pointer;
+}
+
+.container > div {
+  margin-top: 6px;
+  box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.20);
+}
