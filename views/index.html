@@ -35,7 +35,7 @@
             <th>Action</th>
           </tr>
           <tr ng-repeat="asset in assets">
-            <td data-toggle="modal" data-target="#assetEditModal" ng-click="edit(asset)" ng-repeat="key in keys" class="editable" ng-class="{ disabled: !asset[(key | lowercaseNoSpace)] }">{{ asset[(key | lowercaseNoSpace)] }} </td>
+            <td data-toggle="modal" data-target="#assetEditModal" ng-click="edit(asset)" ng-repeat="key in keys" class="editable" ng-class="{ disabled: !asset[(key | lowercaseNoSpace)] }">{{ key == "Type" ? asset[(key | lowercaseNoSpace)].label : asset[(key | lowercaseNoSpace)] }} </td>
             <td data-toggle="modal" data-target="#confirm" class="asset-delete" ng-click="delete(asset.id)"><span class="glyphicon glyphicon-trash"></span> </td>
           </tr>
         </table>

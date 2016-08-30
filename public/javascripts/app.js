@@ -30,7 +30,7 @@ angular.module('bulbThings', [])
     $scope.filterAssets = function () {
       if ($scope.filterType != null)
         $scope.assets = $scope.allAssets.filter(function (el) {
-          return el.type == $scope.filterType.value;
+          return el.type.value == $scope.filterType.value;
         });
       else
         $scope.assets = $scope.allAssets;
@@ -38,6 +38,12 @@ angular.module('bulbThings', [])
 
     // Update assets and filter
     $scope.updateAssets = function (newAssets) {
+      // Loop through assets and return option corresponding to type
+      for (var i = 0; i < newAssets.length; i++) {
+        newAssets[i].type = $scope.options.filter(function (el) {
+          return el.value == newAssets[i].type;
+        })[0];
+      }
       $scope.allAssets = newAssets;
       $scope.filterAssets();
     }
