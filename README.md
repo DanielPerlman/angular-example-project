@@ -1,5 +1,5 @@
-# bulb-things-challenge
-Challenge for bulb-things
+# angular-example-project
+Small project testing out core angular functionality
 
 You must have Postgres running already, 
 then all you have to do is run:
